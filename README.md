@@ -1,5 +1,3 @@
-
-
 # Digital Image Processing Project
 
 ## Image Smoothing and Sharpening Using Spatial Filters
@@ -8,8 +6,8 @@
 
 This project is a small web application (built with **Python** and **Streamlit**) that demonstrates basic **spatial filters** in Digital Image Processing:
 
-* **Smoothing (low-pass filtering)** – reduces noise and blurs the image
-* **Sharpening (high-pass filtering)** – enhances edges and fine details
+-   **Smoothing (low-pass filtering)** – reduces noise and blurs the image
+-   **Sharpening (high-pass filtering)** – enhances edges and fine details
 
 The app allows the user to:
 
@@ -24,15 +22,15 @@ The app allows the user to:
 
 ### 2. Technologies Used
 
-* **Python 3**
-* **Streamlit** – web UI
-* **OpenCV (cv2)** – image processing operations
-* **NumPy** – array operations on images
-* **Pillow (PIL)** – loading and saving images
+-   **Python 3**
+-   **Streamlit** – web UI
+-   **OpenCV (cv2)** – image processing operations
+-   **NumPy** – array operations on images
+-   **Pillow (PIL)** – loading and saving images
 
 Main file:
 
-* `image_filters_app.py` – complete Streamlit application
+-   `image_filters_app.py` – complete Streamlit application
 
 ---
 
@@ -60,48 +58,50 @@ streamlit run image_filters_app.py
 
 1. **Upload an Image**
 
-   * Click **“Step 1 — Upload an image”** and select a `PNG / JPG / JPEG / BMP / TIF` file.
-   * The original image is displayed.
+    - Click **“Step 1 — Upload an image”** and select a `PNG / JPG / JPEG / BMP / TIF` file.
+    - The original image is displayed.
 
 2. **Choose Operation**
 
-   * Under **“Filter settings”**, choose:
+    - Under **“Filter settings”**, choose:
 
-     * `Smoothing (Low-pass)` or
-     * `Sharpening (High-pass)`
+        - `Smoothing (Low-pass)` or
+        - `Sharpening (High-pass)`
 
 3. **Choose Filter Method**
 
-   * If **Smoothing** is selected:
+    - If **Smoothing** is selected:
 
-     * `Average blur`
-     * `Gaussian blur`
-     * `Median blur`
-   * If **Sharpening** is selected:
+        - `Average blur`
+        - `Gaussian blur`
+        - `Median blur`
 
-     * `Simple sharpening kernel`
-     * `Unsharp masking`
+    - If **Sharpening** is selected:
+
+        - `Simple sharpening kernel`
+        - `Unsharp masking`
 
 4. **Set Intensity Level**
 
-   * Use the slider: **1 = lower effect, 10 = higher effect**.
-   * The app internally maps this to kernel size and sharpening strength.
+    - Use the slider: **1 = lower effect, 10 = higher effect**.
+    - The app internally maps this to kernel size and sharpening strength.
 
 5. **Apply Filter**
 
-   * Click **“Apply Filter”**.
-   * The app processes the image and shows:
+    - Click **“Apply Filter”**.
+    - The app processes the image and shows:
 
-     * Original image (left)
-     * Filtered image (right)
+        - Original image (left)
+        - Filtered image (right)
 
 6. **See Details and Download**
 
-   * Under **“Filter details”**, the app shows:
+    - Under **“Filter details”**, the app shows:
 
-     * Filter family and name
-     * Kernel size, sigma, amount, etc. (depending on filter)
-   * Click **“Download filtered image”** to save the result.
+        - Filter family and name
+        - Kernel size, sigma, amount, etc. (depending on filter)
+
+    - Click **“Download filtered image”** to save the result.
 
 ---
 
@@ -111,40 +111,40 @@ Smoothing filters remove rapid intensity changes and reduce noise, producing a b
 
 #### 5.1 Average Blur (Mean Filter)
 
-* Each output pixel is the average of its neighbors.
-* For a 3×3 example, the kernel is:
+-   Each output pixel is the average of its neighbors.
+-   For a 3×3 example, the kernel is:
 
-[
+$$
 \begin{bmatrix}
-1/9 & 1/9 & 1/9 \
-1/9 & 1/9 & 1/9 \
-1/9 & 1/9 & 1/9 \
+1/9 & 1/9 & 1/9 \\
+1/9 & 1/9 & 1/9 \\
+1/9 & 1/9 & 1/9 \\
 \end{bmatrix}
-]
+$$
 
-* In the code, the kernel size depends on intensity (3×3, 5×5, 7×7, …).
+-   In the code, the kernel size depends on intensity (3×3, 5×5, 7×7, …).
 
 #### 5.2 Gaussian Blur
 
-* Uses a Gaussian-shaped kernel: center pixel has the highest weight.
-* Example of a normalized 3×3 Gaussian kernel:
+-   Uses a Gaussian-shaped kernel: center pixel has the highest weight.
+-   Example of a normalized 3×3 Gaussian kernel:
 
-[
+$$
 \begin{bmatrix}
-1/16 & 2/16 & 1/16 \
-2/16 & 4/16 & 2/16 \
-1/16 & 2/16 & 1/16 \
+1/16 & 2/16 & 1/16 \\
+2/16 & 4/16 & 2/16 \\
+1/16 & 2/16 & 1/16 \\
 \end{bmatrix}
-]
+$$
 
-* In the app, both kernel size and sigma (spread) increase with intensity.
+-   In the app, both kernel size and sigma (spread) increase with intensity.
 
 #### 5.3 Median Blur
 
-* Non-linear filter (does not use a kernel matrix).
-* For each pixel, the neighborhood values are sorted and the **median** value is taken.
-* Very effective against **salt-and-pepper noise**.
-* Neighborhood size (3×3, 5×5, 7×7, …) grows with intensity.
+-   Non-linear filter (does not use a kernel matrix).
+-   For each pixel, the neighborhood values are sorted and the **median** value is taken.
+-   Very effective against **salt-and-pepper noise**.
+-   Neighborhood size (3×3, 5×5, 7×7, …) grows with intensity.
 
 ---
 
@@ -154,30 +154,30 @@ Sharpening filters highlight edges and small details by emphasizing intensity ch
 
 #### 6.1 Simple Sharpening Kernel
 
-* Uses a fixed 3×3 high-pass kernel:
+-   Uses a fixed 3×3 high-pass kernel:
 
-[
+$$
 \begin{bmatrix}
-0 & -1 & 0 \
--1 & 5 & -1 \
-0 & -1 & 0 \
+0 & -1 & 0 \\
+-1 & 5 & -1 \\
+0 & -1 & 0 \\
 \end{bmatrix}
-]
+$$
 
-* This increases the contribution of the center pixel and subtracts neighbors.
-* In the app, the result of this kernel is blended with the original image; the blend strength increases with intensity.
+-   This increases the contribution of the center pixel and subtracts neighbors.
+-   In the app, the result of this kernel is blended with the original image; the blend strength increases with intensity.
 
 #### 6.2 Unsharp Masking
 
-* Steps:
+-   Steps:
 
-  1. Blur the original image (Gaussian blur).
-  2. Subtract the blurred image from the original to get a **mask** (edges).
-  3. Add a scaled version of this mask back to the original.
+    1. Blur the original image (Gaussian blur).
+    2. Subtract the blurred image from the original to get a **mask** (edges).
+    3. Add a scaled version of this mask back to the original.
 
-* This is equivalent to applying a sharpening kernel whose strength depends on the chosen **amount** and blur parameters.
+-   This is equivalent to applying a sharpening kernel whose strength depends on the chosen **amount** and blur parameters.
 
-* In the app, the blur size and sharpening amount both increase with intensity.
+-   In the app, the blur size and sharpening amount both increase with intensity.
 
 ---
 
@@ -185,14 +185,15 @@ Sharpening filters highlight edges and small details by emphasizing intensity ch
 
 The **Intensity level** slider (1–10) controls:
 
-* **Smoothing filters**
+-   **Smoothing filters**
 
-  * Size of the neighborhood (kernel size)
-  * Sigma for Gaussian blur
-* **Sharpening filters**
+    -   Size of the neighborhood (kernel size)
+    -   Sigma for Gaussian blur
 
-  * Strength of blending between original and sharpened image
-  * Blur size and sharpening amount for unsharp masking
+-   **Sharpening filters**
+
+    -   Strength of blending between original and sharpened image
+    -   Blur size and sharpening amount for unsharp masking
 
 Higher intensity → larger kernels / stronger sharpening.
 
@@ -200,9 +201,9 @@ Higher intensity → larger kernels / stronger sharpening.
 
 ### 8. Possible Extensions
 
-* Add more spatial filters (e.g., Laplacian, Sobel, custom kernels).
-* Show histograms before and after filtering.
-* Add frequency-domain filtering using Fourier transforms.
+-   Add more spatial filters (e.g., Laplacian, Sobel, custom kernels).
+-   Show histograms before and after filtering.
+-   Add frequency-domain filtering using Fourier transforms.
 
 ---
 
@@ -210,7 +211,7 @@ Higher intensity → larger kernels / stronger sharpening.
 
 This project demonstrates how simple spatial filters can be used to:
 
-* Smooth images (remove noise and fine details)
-* Sharpen images (enhance edges and focus)
+-   Smooth images (remove noise and fine details)
+-   Sharpen images (enhance edges and focus)
 
 The interactive Streamlit interface makes it easy to experiment with different filters and intensities and visually understand their effects on a real image.
